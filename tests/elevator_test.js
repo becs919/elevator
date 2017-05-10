@@ -110,7 +110,7 @@ describe('Elevator', function() {
     assert.equal(elevator.floorsTraversed, 13);
 
     elevator.goToFloor(person2);
-    
+
     assert.deepEqual(elevator.getStops(), [8, 3, 8, 1]);
     assert.equal(elevator.getTraversed(elevator.stops), 25);
     assert.equal(elevator.floorsTraversed, 25);
@@ -165,5 +165,16 @@ describe('Elevator', function() {
     assert.equal(elevator.motionStatus, 'idle');
   });
 
+  it('should move a person up and a person down', () => {
+    let person = new Person("Brittany", 8,  3);
+    let person2 = new Person("Robbie", 5,  1);
+
+    elevator.goToFloor(person)
+    elevator.goToFloor(person2)
+
+
+    assert.deepEqual(elevator.getStops(), [8,3,5,1])
+    assert.equal(elevator.floorsTraversed, 19)
+  });
 
 });
