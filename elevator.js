@@ -41,7 +41,6 @@ class Elevator {
       this.currentFloor = this.queue[0].dropOffFloor;
       // add stop to array
       this.stops.push(this.currentFloor);
-      this.getStops()
       // take rider out of array
       this.currentRiders.pop();
       // remove from que
