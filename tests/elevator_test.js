@@ -110,6 +110,7 @@ describe('Elevator', function() {
     assert.equal(elevator.floorsTraversed, 13);
 
     elevator.goToFloor(person2);
+    
     assert.deepEqual(elevator.getStops(), [8, 3, 8, 1]);
     assert.equal(elevator.getTraversed(elevator.stops), 25);
     assert.equal(elevator.floorsTraversed, 25);
@@ -117,6 +118,9 @@ describe('Elevator', function() {
 
   it('should have a checkQueue method', () => {
     let person = new Person("Brittany", 8,  3);
+
+    elevator.checkQueue()
+    assert.equal(elevator.motionStatus, "idle" )
 
     elevator.queue.push(person);
 
@@ -129,6 +133,36 @@ describe('Elevator', function() {
     assert.deepEqual(elevator.queue, []);
     assert.deepEqual(elevator.getStops(), [8, 3]);
     assert.deepEqual(elevator.motionStatus, 'idle');
+  });
+
+  it('should have a moving method', () => {
+    let person = new Person("Brittany", 8,  3);
+
+    elevator.queue.push(person);
+    assert.deepEqual(elevator.queue.length, 1);
+
+    elevator.moving();
+    assert.equal(elevator.motionStatus, "idle" )
+
+    elevator.changeStatus();
+    assert.equal(elevator.motionStatus, "moving" )
+
+    elevator.moving();
+    assert.equal(elevator.motionStatus, "idle" )
+
+    assert.deepEqual(elevator.getStops(), [8, 3]);
+    assert.deepEqual(elevator.floorsTraversed, '13');
+  });
+
+  it('should have a changeStatus method', () => {
+
+    assert.equal(elevator.motionStatus, 'idle');
+
+    elevator.changeStatus()
+    assert.equal(elevator.motionStatus, 'moving');
+
+    elevator.changeStatus()
+    assert.equal(elevator.motionStatus, 'idle');
   });
 
 
