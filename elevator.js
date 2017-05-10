@@ -15,6 +15,8 @@ class Elevator {
   goToFloor(person) {
     this.queue.push(person)
 
+    
+
     this.checkQueue()
   }
 
@@ -22,7 +24,19 @@ class Elevator {
     // BREAK OUT MORE!!! TOO CONNECTED NEED TO BE ABLE TO TEST
     if (this.queue.length > 0) {
       // change to moving
-      this.motionStatus = "moving";
+      this.changeStatus();
+      // moving
+      this.moving();
+
+    } else if (this.queue.length === 0) {
+      this.motionStatus = "idle"
+      // possibly send back to floor 0???
+    }
+
+  }
+
+  moving() {
+    if (this.motionStatus === "moving") {
       // moving to current floor of person
       this.currentFloor = this.queue[0].currentFloor;
       // adding stop to array
@@ -33,17 +47,18 @@ class Elevator {
       this.currentFloor = this.queue[0].dropOffFloor;
       // add stop to array
       this.stops.push(this.currentFloor);
+      this.getStops()
       // take rider out of array
-      this.currentRiders.pop()
+      this.currentRiders.pop();
       // remove from que
-      this.queue.splice(0,1)
+      this.queue.splice(0,1);
       // change status to idle again? maybe here?
-      this.motionStatus = "idle";
-    } else if (this.queue.length === 0) {
-      this.motionStatus = "idle"
-      // possibly send back to floor 0???
+      this.changeStatus();
     }
+  }
 
+  changeStatus() {
+    this.motionStatus === "idle" ? this.motionStatus = "moving" : this.motionStatus = "idle"
   }
 
   getStops() {
@@ -61,7 +76,6 @@ class Elevator {
     this.stops.splice(0,1)
     return this.floorsTraversed = x
   }
-
 
   reset() {
     this.currentFloor = 0,
