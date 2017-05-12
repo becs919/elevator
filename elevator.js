@@ -5,61 +5,59 @@ class Elevator {
     this.stops = [],
     this.queue = [],
     this.currentRiders = [],
-    this.motionStatus = "idle"
+    this.motionStatus = 'idle';
   }
 
   takeRequest(person) {
     this.queue.push(person);
 
     this.checkQueue();
-  };
+  }
 
   checkQueue() {
     if (this.queue.length > 0) {
-
-      this.motionStatus = "moving";
+      this.motionStatus = 'moving';
       this.takeRider();
-
     } else if (this.queue.length === 0) {
-
-      this.motionStatus = "idle";
+      this.motionStatus = 'idle';
     }
-  };
+  }
 
   takeRider() {
-      this.currentFloor = this.queue[0].currentFloor;
+    this.currentFloor = this.queue[0].currentFloor;
 
-      this.stops.push(this.currentFloor);
+    this.stops.push(this.currentFloor);
 
-      this.currentRiders.push(this.queue[0]);
+    this.currentRiders.push(this.queue[0]);
 
-      this.currentFloor = this.queue[0].dropOffFloor;
+    this.currentFloor = this.queue[0].dropOffFloor;
 
-      this.stops.push(this.currentFloor);
+    this.stops.push(this.currentFloor);
 
-      this.currentRiders.pop();
+    this.currentRiders.pop();
 
-      this.queue.splice(0,1);
+    this.queue.splice(0, 1);
 
-      this.motionStatus = "idle";
-  };
+    this.motionStatus = 'idle';
+  }
 
   getStops() {
     this.getTraversed(this.stops);
     return this.stops;
-  };
+  }
 
   getTraversed(array) {
     let x = 0;
     array.unshift(0);
 
-    for(let i = (array.length-1); i>=1; --i ) {
-      x = x + Math.abs(array[i]-array[i-1])
-    };
+    for (let i = (array.length - 1); i >= 1; --i) {
+      x = x + Math.abs(array[i] - array[i - 1])
+    }
 
-    this.stops.splice(0,1);
-    return this.floorsTraversed = x;
-  };
+    this.stops.splice(0, 1);
+    this.floorsTraversed = x;
+    return this.floorsTraversed;
+  }
 
   reset() {
     this.currentFloor = 0,
@@ -67,16 +65,16 @@ class Elevator {
     this.stops = [],
     this.queue = [],
     this.currentRiders = [],
-    this.motionStatus = "idle"
-  };
-};
+    this.motionStatus = 'idle'
+  }
+}
 
 class Person {
   constructor(name, currentFloor, dropOffFloor) {
     this.name = name,
     this.currentFloor = currentFloor,
     this.dropOffFloor = dropOffFloor
-  };
-};
+  }
+}
 
 module.exports = { Elevator, Person };
